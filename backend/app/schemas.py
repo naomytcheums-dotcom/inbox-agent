@@ -20,6 +20,7 @@ class ReplySettingsOut(BaseModel):
 class GmailStatusOut(BaseModel):
     connected: bool
     email_address: str = ""
+    oauth_configured: bool = False
 
 
 class ProcessedEmailOut(BaseModel):

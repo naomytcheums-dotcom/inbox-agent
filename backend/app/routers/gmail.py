@@ -45,10 +45,11 @@ async def callback(code: str, db: Session = Depends(get_db)):
 
 @router.get("/status", response_model=GmailStatusOut, dependencies=[Depends(require_site_password)])
 def status(db: Session = Depends(get_db)):
+    oauth_configured = bool(settings.google_client_id and settings.google_client_secret)
     account = db.query(GmailAccount).first()
     if not account or not account.refresh_token:
-        return GmailStatusOut(connected=False)
-    return GmailStatusOut(connected=True, email_address=account.email_address)
+        return GmailStatusOut(connected=False, oauth_configured=oauth_configured)
+    return GmailStatusOut(connected=True, email_address=account.email_address, oauth_configured=oauth_configured)
 
 
 @router.post("/check", response_model=CheckInboxResult, dependencies=[Depends(require_site_password)])
