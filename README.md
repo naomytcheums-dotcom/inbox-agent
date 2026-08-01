@@ -9,6 +9,13 @@
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
 ![OpenAI SDK](https://img.shields.io/badge/OpenAI_SDK-412991?style=flat&logo=openai&logoColor=white)
 ![Gmail API](https://img.shields.io/badge/Gmail_API-EA4335?style=flat&logo=gmail&logoColor=white)
+![Render](https://img.shields.io/badge/Render-46E3B7?style=flat&logo=render&logoColor=white)
+![Vercel](https://img.shields.io/badge/Vercel-000000?style=flat&logo=vercel&logoColor=white)
+
+**[Live demo](https://inbox-agent-jade.vercel.app)**
+
+<img src="docs/screenshots/connect.png" alt="Inbox Agent connect page" width="440">
+<img src="docs/screenshots/settings.png" alt="Inbox Agent reply settings page" width="440">
 
 Inbox Agent watches your Gmail inbox and drafts replies for you. It decides which incoming emails actually need a response (skipping newsletters and marketing), writes a reply in your tone, and saves it as a Gmail draft in the right thread — it never sends anything on its own.
 
