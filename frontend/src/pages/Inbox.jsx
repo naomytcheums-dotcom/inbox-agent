@@ -7,6 +7,7 @@ function Inbox() {
   const [checking, setChecking] = useState(false)
   const [error, setError] = useState(null)
   const [summary, setSummary] = useState(null)
+  const [showSetupInfo, setShowSetupInfo] = useState(false)
 
   useEffect(() => {
     refresh()
@@ -41,33 +42,14 @@ function Inbox() {
     }
   }
 
-  if (!status) return null
-
-  if (!status.connected && !status.oauth_configured) {
-    return (
-      <div>
-        <div className="page-header">
-          <h1>Inbox Agent</h1>
-          <p>Connect Gmail to let the AI draft replies to your incoming emails — nothing ever sends on its own.</p>
-        </div>
-        <div className="card connect-card">
-          <h2>This demo isn't connected to a Gmail account</h2>
-          <p>
-            Inbox Agent needs its own Google OAuth credentials to connect a real inbox — this public demo
-            intentionally doesn't have any configured, so no one's real Gmail is ever exposed here.
-          </p>
-          <p>
-            To run it yourself: grab the code from{' '}
-            <a href="https://github.com/naomytcheums-dotcom/inbox-agent" target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            , create a free Google Cloud project, enable the Gmail API, generate an OAuth Client ID, and add it to
-            your own <code>backend/.env</code>. Full steps are in the README.
-          </p>
-        </div>
-      </div>
-    )
+  function handleConnectClick(e) {
+    if (!status.oauth_configured) {
+      e.preventDefault()
+      setShowSetupInfo(true)
+    }
   }
+
+  if (!status) return null
 
   if (!status.connected) {
     return (
@@ -79,9 +61,21 @@ function Inbox() {
         <div className="card connect-card">
           <h2>Connect your Gmail account</h2>
           <p>You'll be asked to authorize read + draft access. Inbox Agent never sends email on your behalf.</p>
-          <a className="btn-primary" href={connectGmailUrl()}>
+          <a className="btn-primary" href={connectGmailUrl()} onClick={handleConnectClick}>
             Connect Gmail
           </a>
+
+          {showSetupInfo && (
+            <div className="form-error" style={{ textAlign: 'left', marginTop: 20 }}>
+              This public demo doesn't have Google OAuth credentials configured, so no one's real Gmail is ever
+              exposed here. To run it with your own inbox: grab the code from{' '}
+              <a href="https://github.com/naomytcheums-dotcom/inbox-agent" target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+              , create a free Google Cloud project, enable the Gmail API, generate an OAuth Client ID, and add it to
+              your own <code>backend/.env</code> — full steps are in the README.
+            </div>
+          )}
         </div>
       </div>
     )
